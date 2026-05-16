@@ -12,11 +12,11 @@
 [x] Hard viewport boundaries injection.
 
 ⏳ Stage 2: Weapon Systems & Object Pooling
-[ ] Custom Generic ObjectPool utility implementation.
+[x] Custom Generic ObjectPool utility implementation.
 
-[ ] Bullet entities allocation & cycling mechanics.
+[x] Bullet entities allocation & cycling mechanics.
 
-[ ] Cooldown & weapon fire rate clocks.
+[x] Cooldown & weapon fire rate clocks.
 
 ⏳ Stage 3: Enemy Systems & Spawning
 [ ] Automated wave-generation triggers.
