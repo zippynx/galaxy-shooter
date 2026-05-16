@@ -13,7 +13,7 @@ export class InputManager {
       this.keys.delete(e.code);
     });
   }
-
+  isShooting() { return this.isKeyPressed('Space'); }
   isKeyPressed(keyCode) {
     return this.keys.has(keyCode);
   }

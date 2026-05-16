@@ -1,12 +1,13 @@
 import { GAME_CONFIG } from './utils/constants.js';
 import { InputManager } from './managers/InputManager.js';
 import { Player } from './entities/Player.js';
+import { ObjectPool } from './utils/ObjectPool.js'; 
+import { Bullet } from './entities/Bullet.js';     
 
 export class Game {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
-    
     this.canvas.width = GAME_CONFIG.GAME_WIDTH;
     this.canvas.height = GAME_CONFIG.GAME_HEIGHT;
 
@@ -18,6 +19,7 @@ export class Game {
 
   initSystems() {
     this.inputManager = new InputManager();
+    this.bulletPool = new ObjectPool(() => new Bullet(), 50);
     this.player = new Player(this);
   }
 
@@ -35,11 +37,14 @@ export class Game {
 
   update(dt) {
     this.player.update(dt);
+    this.bulletPool.updateAll(dt); 
   }
 
   draw() {
+    // Bersihkan frame sebelumnya
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     
+    this.bulletPool.drawAll(this.ctx); 
     this.player.draw(this.ctx);
   }
 
