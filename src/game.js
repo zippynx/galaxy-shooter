@@ -3,11 +3,14 @@ import { InputManager } from './managers/InputManager.js';
 import { Player } from './entities/Player.js';
 import { ObjectPool } from './utils/ObjectPool.js'; 
 import { Bullet } from './entities/Bullet.js';     
+import { Enemy } from './entities/Enemy.js';       
+import { SpawnSystem } from './systems/SpawnSystem.js'; 
 
 export class Game {
   constructor(canvas) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
+    
     this.canvas.width = GAME_CONFIG.GAME_WIDTH;
     this.canvas.height = GAME_CONFIG.GAME_HEIGHT;
 
@@ -20,7 +23,9 @@ export class Game {
   initSystems() {
     this.inputManager = new InputManager();
     this.bulletPool = new ObjectPool(() => new Bullet(), 50);
+    this.enemyPool = new ObjectPool(() => new Enemy(), 30); 
     this.player = new Player(this);
+    this.spawnSystem = new SpawnSystem(this);
   }
 
   loop(timestamp) {
@@ -37,14 +42,15 @@ export class Game {
 
   update(dt) {
     this.player.update(dt);
-    this.bulletPool.updateAll(dt); 
+    this.bulletPool.updateAll(dt);
+    this.enemyPool.updateAll(dt);
+    this.spawnSystem.update(dt);  
   }
 
   draw() {
-    // Bersihkan frame sebelumnya
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    
-    this.bulletPool.drawAll(this.ctx); 
+    this.bulletPool.drawAll(this.ctx);
+    this.enemyPool.drawAll(this.ctx); 
     this.player.draw(this.ctx);
   }
 
