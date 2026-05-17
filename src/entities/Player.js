@@ -9,8 +9,14 @@ export class Player {
     this.y = GAME_CONFIG.GAME_HEIGHT - this.height - 20;
     this.speed = GAME_CONFIG.PLAYER_SPEED;
     this.color = GAME_CONFIG.COLORS.NEON_BLUE;
-
     this.fireRate = 0.15; 
+    this.fireTimer = 0;
+  } // <-- Tutup constructor di sini!
+
+  // Fungsi reset sejajar dengan constructor
+  reset() {
+    this.x = GAME_CONFIG.GAME_WIDTH / 2 - this.width / 2;
+    this.y = GAME_CONFIG.GAME_HEIGHT - this.height - 20;
     this.fireTimer = 0;
   }
 
@@ -35,7 +41,6 @@ export class Player {
   }
 
   shoot() {
-
     const bullet = this.game.bulletPool.get();
     if (bullet) {
       bullet.spawn(this.x + this.width / 2, this.y);

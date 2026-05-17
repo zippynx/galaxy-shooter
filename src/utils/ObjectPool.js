@@ -29,4 +29,10 @@ export class ObjectPool {
       if (this.pool[i].active) this.pool[i].draw(ctx);
     }
   }
+
+  clear() {
+    for (let i = 0; i < this.pool.length; i++) {
+      this.pool[i].active = false;
+    }
+  }
 }

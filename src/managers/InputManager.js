@@ -3,7 +3,11 @@ export class InputManager {
     this.keys = new Set();
     this.init();
   }
-
+  
+  isRestarting() { 
+    return this.isKeyPressed('Enter') || this.isKeyPressed('Space'); 
+  }
+  
   init() {
     window.addEventListener('keydown', (e) => {
       this.keys.add(e.code);

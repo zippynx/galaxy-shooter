@@ -7,7 +7,7 @@ import { Enemy } from './entities/Enemy.js';
 import { SpawnSystem } from './systems/SpawnSystem.js'; 
 import { CollisionSystem } from './systems/CollisionSystem.js';
 import { ParticleSystem } from './systems/ParticleSystem.js'; 
-import { HUD } from './ui/HUD.js';                         
+import { HUD } from './ui/HUD.js';                           
 
 export class Game {
   constructor(canvas) {
@@ -32,9 +32,21 @@ export class Game {
     this.player = new Player(this);
     this.spawnSystem = new SpawnSystem(this);
     this.collisionSystem = new CollisionSystem(this); 
-    
     this.particleSystem = new ParticleSystem(); 
     this.hud = new HUD(this);
+  }
+
+  // Fungsi reset dimasukkan ke DALAM class Game
+  reset() {
+    this.score = 0;
+    this.isGameOver = false;
+    
+    this.player.reset();
+    this.spawnSystem.spawnTimer = 0;
+    
+    this.bulletPool.clear();
+    this.enemyPool.clear();
+    this.particleSystem.pool.clear();
   }
 
   loop(timestamp) {
@@ -48,9 +60,14 @@ export class Game {
     requestAnimationFrame((ts) => this.loop(ts));
   }
 
+  // Hanya ada SATU fungsi update sekarang
   update(dt) {
     if (this.isGameOver) {
-      this.particleSystem.update(dt);
+      this.particleSystem.update(dt); 
+      
+      if (this.inputManager.isRestarting()) {
+        this.reset();
+      }
       return; 
     }
 
@@ -58,13 +75,14 @@ export class Game {
     this.bulletPool.updateAll(dt);
     this.enemyPool.updateAll(dt); 
     this.spawnSystem.update(dt);  
-    this.particleSystem.update(dt); 
+    this.particleSystem.update(dt);
     
     this.collisionSystem.update(); 
   }
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    
     this.bulletPool.drawAll(this.ctx);
     this.enemyPool.drawAll(this.ctx); 
     this.particleSystem.draw(this.ctx);
@@ -82,4 +100,4 @@ export class Game {
       this.loop(ts);
     });
   }
-}
+} // <-- Tutup class Game ada di paling bawah sini

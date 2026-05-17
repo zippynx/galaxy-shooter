@@ -12,7 +12,7 @@ export class HUD {
     ctx.textAlign = 'left';
     ctx.shadowBlur = 5;
     ctx.shadowColor = GAME_CONFIG.COLORS.NEON_BLUE;
-    
+
     ctx.fillText(`SCORE: ${this.game.score}`, 20, 40);
 
     if (this.game.isGameOver) {
@@ -26,7 +26,7 @@ export class HUD {
       ctx.font = '20px "Courier New", Courier, monospace';
       ctx.fillStyle = '#fff';
       ctx.shadowBlur = 0;
-      ctx.fillText('Refresh page to reboot', GAME_CONFIG.GAME_WIDTH / 2, GAME_CONFIG.GAME_HEIGHT / 2 + 40);
+      ctx.fillText('Press ENTER to reboot', GAME_CONFIG.GAME_WIDTH / 2, GAME_CONFIG.GAME_HEIGHT / 2 + 40);
     }
     
     ctx.restore();
