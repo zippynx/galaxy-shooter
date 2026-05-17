@@ -19,23 +19,23 @@
 [x] Cooldown & weapon fire rate clocks.
 
 ⏳ Stage 3: Enemy Systems & Spawning
-[ ] Automated wave-generation triggers.
+[x] Automated wave-generation triggers.
 
-[ ] Complex linear and sinusoidal vector paths.
+[x] Complex linear and sinusoidal vector paths.
 
-[ ] Extensible state management for diverse alien variants.
+[x] Extensible state management for diverse alien variants.
 
 ⏳ Stage 4: High-Performance Collision Systems
-[ ] AABB (Axis-Aligned Bounding Box) mathematical resolution.
+[x] AABB (Axis-Aligned Bounding Box) mathematical resolution.
 
-[ ] Multi-tier spatial partitioning exploration (Uniform Grids/Quadtree ready).
+[x] Multi-tier spatial partitioning exploration (Uniform Grids/Quadtree ready).
 
 ⏳ Stage 5: FX & Visual Juiciness
-[ ] Particle System emitting pooled glowing sparks.
+[x] Particle System emitting pooled glowing sparks.
 
-[ ] Camera matrix screen-shake implementation on high-impact states.
+[x] Camera matrix screen-shake implementation on high-impact states.
 
-[ ] Parallax neon stardust layered background rendering.
+[x] Parallax neon stardust layered background rendering.
 
 🛠️ Local Development Setup
 Ensure you have Node.js installed on your machine.
