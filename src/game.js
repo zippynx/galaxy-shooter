@@ -5,7 +5,9 @@ import { ObjectPool } from './utils/ObjectPool.js';
 import { Bullet } from './entities/Bullet.js';     
 import { Enemy } from './entities/Enemy.js';         
 import { SpawnSystem } from './systems/SpawnSystem.js'; 
-import { CollisionSystem } from './systems/CollisionSystem.js'; // Import baru
+import { CollisionSystem } from './systems/CollisionSystem.js';
+import { ParticleSystem } from './systems/ParticleSystem.js'; 
+import { HUD } from './ui/HUD.js';                         
 
 export class Game {
   constructor(canvas) {
@@ -16,20 +18,23 @@ export class Game {
 
     this.lastTime = 0;
     this.deltaTime = 0;
+    this.score = 0;
+    this.isGameOver = false;
 
     this.initSystems();
   }
 
   initSystems() {
     this.inputManager = new InputManager();
-    
     this.bulletPool = new ObjectPool(() => new Bullet(), 50);
     this.enemyPool = new ObjectPool(() => new Enemy(), 30); 
     
     this.player = new Player(this);
     this.spawnSystem = new SpawnSystem(this);
-    
     this.collisionSystem = new CollisionSystem(this); 
+    
+    this.particleSystem = new ParticleSystem(); 
+    this.hud = new HUD(this);
   }
 
   loop(timestamp) {
@@ -44,20 +49,31 @@ export class Game {
   }
 
   update(dt) {
+    if (this.isGameOver) {
+      this.particleSystem.update(dt);
+      return; 
+    }
+
     this.player.update(dt);
     this.bulletPool.updateAll(dt);
     this.enemyPool.updateAll(dt); 
     this.spawnSystem.update(dt);  
+    this.particleSystem.update(dt); 
     
     this.collisionSystem.update(); 
   }
 
   draw() {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    
     this.bulletPool.drawAll(this.ctx);
     this.enemyPool.drawAll(this.ctx); 
-    this.player.draw(this.ctx);
+    this.particleSystem.draw(this.ctx);
+    
+    if (!this.isGameOver) {
+      this.player.draw(this.ctx);
+    }
+    
+    this.hud.draw(this.ctx); 
   }
 
   start() {

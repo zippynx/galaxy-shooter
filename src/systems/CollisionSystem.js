@@ -13,20 +13,33 @@ export class CollisionSystem {
   }
 
   update() {
+    if (this.game.isGameOver) return;
+
     const bullets = this.game.bulletPool.pool;
     const enemies = this.game.enemyPool.pool;
+    const player = this.game.player;
 
-    for (let i = 0; i < bullets.length; i++) {
-      const b = bullets[i];
-      if (!b.active) continue;
+    for (let j = 0; j < enemies.length; j++) {
+      const e = enemies[j];
+      if (!e.active) continue;
 
-      for (let j = 0; j < enemies.length; j++) {
-        const e = enemies[j];
-        if (!e.active) continue;
+      if (this.checkAABB(player, e)) {
+        this.game.isGameOver = true;
+        
+        this.game.particleSystem.createExplosion(player.x + player.width/2, player.y + player.height/2, player.color, 50);
+        return; 
+      }
+
+      for (let i = 0; i < bullets.length; i++) {
+        const b = bullets[i];
+        if (!b.active) continue;
 
         if (this.checkAABB(b, e)) {
-          e.active = false; 
-          b.active = false; 
+          e.active = false;
+          b.active = false;
+          
+          this.game.score += 10;
+          this.game.particleSystem.createExplosion(e.x + e.width/2, e.y + e.height/2, e.color, 15);
           break; 
         }
       }
