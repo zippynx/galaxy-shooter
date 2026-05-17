@@ -1,70 +1,73 @@
-### GALAXY-SHOOTER
+# GALAXY SHOOTER — Engine Architecture
 
-✅ Stage 1: Foundation Engine (Current)
-[x] Project Bootstrapping via Vite & ES6 Modules.
+## Implemented Engine Capabilities
 
-[x] High-precision requestAnimationFrame game loop with deltaTime capping.
+### Phase 1: Core Engine Foundation
 
-[x] Memory-efficient stateful InputManager.
+* **Project Bootstrapping:** Configured with Vite and ES6 Modules for native ESM development and optimized production bundling.
+* **Deterministic Game Loop:** Implemented a high-precision `requestAnimationFrame` ticker with `deltaTime` threshold capping to maintain consistent gameplay physics across varying display refresh rates (60Hz–144Hz+).
+* **Input Management:** Engineered a memory-efficient, stateful input polling matrix to minimize asynchronous browser event latency.
+* **Rendering Pipeline & Viewport Constraints:** Established a decoupled rendering pipeline with mathematical viewport boundary enforcement for stable entity containment.
 
-[x] Primitive/Placeholder rendering setup (Player geometry).
+### Phase 2: Memory & Weapon Systems
 
-[x] Hard viewport boundaries injection.
+* **Object Pooling Infrastructure:** Developed a custom generic `ObjectPool` utility to eliminate Garbage Collection (GC) micro-stutters during runtime.
+* **Projectile Lifecycle Management:** Implemented pre-allocated projectile entities using active/inactive state cycling for zero-allocation bullet spawning.
+* **Time-Sliced Weapon Cooldowns:** Built hardware-independent fire-rate clocks and deterministic cooldown systems for stable weapon behavior.
 
-⏳ Stage 2: Weapon Systems & Object Pooling
-[x] Custom Generic ObjectPool utility implementation.
+### Phase 3: AI & Entity Spawning
 
-[x] Bullet entities allocation & cycling mechanics.
+* **Procedural Wave Generation:** Designed automated, clock-driven enemy spawning systems for continuous combat scaling.
+* **Trajectory Mathematics:** Implemented vector-based movement paths with architecture prepared for sinusoidal and advanced movement pattern expansion.
+* **Entity State Decoupling:** Structured enemy lifecycle management to support extensible alien variants and future behavioral AI systems.
 
-[x] Cooldown & weapon fire rate clocks.
+### Phase 4: High-Performance Collision Systems
 
-⏳ Stage 3: Enemy Systems & Spawning
-[x] Automated wave-generation triggers.
+* **AABB Collision Verification:** Integrated Axis-Aligned Bounding Box collision mathematics for precise hitbox detection.
+* **Collision Middleware Architecture:** Decoupled collision handling into an isolated subsystem prepared for future spatial partitioning optimizations such as Quadtrees and Uniform Grids.
 
-[x] Complex linear and sinusoidal vector paths.
+### Phase 5: FX & Visual Rendering
 
-[x] Extensible state management for diverse alien variants.
+* **Zero-Allocation Particle Engine:** Built radial explosion emitters utilizing pre-allocated particle pools with alpha decay physics and lightweight update cycles.
+* **Game State Recovery System:** Implemented a custom `reset()` protocol capable of restoring runtime state without requiring browser-level reloads.
 
-⏳ Stage 4: High-Performance Collision Systems
-[x] AABB (Axis-Aligned Bounding Box) mathematical resolution.
+---
 
-[x] Multi-tier spatial partitioning exploration (Uniform Grids/Quadtree ready).
+# Local Development Setup
 
-⏳ Stage 5: FX & Visual Juiciness
-[x] Particle System emitting pooled glowing sparks.
+Ensure Node.js is installed on your workstation.
 
-[x] Camera matrix screen-shake implementation on high-impact states.
+## 1. Clone the Repository
 
-[x] Parallax neon stardust layered background rendering.
-
-🛠️ Local Development Setup
-Ensure you have Node.js installed on your machine.
-
-Clone the Repository
-
-Bash
-git clone 
+```bash
+git clone https://github.com/zippynx/galaxy-shooter.git
 cd galaxy-shooter
-Install Dependencies
+```
 
-Bash
+## 2. Install Dependencies
+
+```bash
 npm install
-Run Development Server
+```
 
-Bash
+## 3. Run Development Server
+
+```bash
 npm run dev
-Open http://localhost:5173 in your browser.
+```
 
-Production Compile
+Navigate to:
 
-Bash
+```txt
+http://localhost:5173
+```
+
+to access the local development environment.
+
+## 4. Production Build
+
+```bash
 npm run build
+```
 
-👨‍💻 Engineering Standard
-This project adheres to professional game development principles:
-
-High Cohesion / Low Coupling: Systems communicate via direct dependency injection or clean parameters.
-
-No Magic Numbers: All values are centralized inside constants.js.
-
-Deterministic State: Game state progresses strictly according to time slices, making it easily adaptable for future features like rewind mechanics, replays, or networking.
+This generates a minified, tree-shaken production build inside the `/dist` directory.
