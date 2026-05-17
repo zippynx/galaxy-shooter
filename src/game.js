@@ -36,7 +36,6 @@ export class Game {
     this.hud = new HUD(this);
   }
 
-  // Fungsi reset dimasukkan ke DALAM class Game
   reset() {
     this.score = 0;
     this.isGameOver = false;
@@ -60,7 +59,6 @@ export class Game {
     requestAnimationFrame((ts) => this.loop(ts));
   }
 
-  // Hanya ada SATU fungsi update sekarang
   update(dt) {
     if (this.isGameOver) {
       this.particleSystem.update(dt); 
@@ -100,4 +98,4 @@ export class Game {
       this.loop(ts);
     });
   }
-} // <-- Tutup class Game ada di paling bawah sini
+} 
